@@ -101,6 +101,12 @@ input[type=range]::-webkit-slider-thumb{
 input[type=range]::-moz-range-thumb{
   width:15px;height:15px;border-radius:50%;background:var(--pv);border:2px solid var(--panel);
 }
+.segs{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.segs button{font:inherit;font-size:12.5px;line-height:1.3;border:1px solid var(--line-strong);background:transparent;color:var(--ink-soft);padding:6px 9px;cursor:pointer;text-align:left}
+.segs button[aria-pressed="true"]{border-color:var(--pv);color:var(--ink);font-weight:600;background:var(--rail)}
+.segs button:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.mode-line{font-size:12.5px;color:var(--ink-soft);margin:-10px 0 16px}
+.mode-line b{color:var(--pv);font-weight:600}
 .reset{
   margin-top:14px;width:100%;padding:9px;background:transparent;color:var(--ink-soft);
   border:1px solid var(--line-strong);font:inherit;font-size:13px;cursor:pointer;
@@ -168,18 +174,49 @@ footer{margin-top:26px;padding-top:16px;border-top:1px solid var(--line);font-si
 
   <section class="controls">
     <h2>Assumptions</h2>
+    <p class="mode-line" id="modeLine"></p>
     <p class="ctl-note" style="margin-bottom:18px">Every kilowatt-hour produced is consumed in the home as it is generated. Nothing is exported, so all output offsets electricity at the full retail rate.</p>
+
+    <div class="ctl seg-ctl">
+      <div class="ctl-head"><label>Rates</label></div>
+      <p class="ctl-note">2024: each schedule's average revenue per kWh. 2026: March 2026 rates, 39&cent; full rate and 25.6&cent; CARE, as used in the slides.</p>
+      <div class="segs" id="rates">
+        <button type="button" data-v="2024" aria-pressed="true">2024 blended, by schedule</button>
+        <button type="button" data-v="2026" aria-pressed="false">2026: 39&cent; / 25.6&cent; CARE</button>
+      </div>
+    </div>
+
+    <div class="ctl seg-ctl">
+      <div class="ctl-head"><label>Who adopts</label></div>
+      <p class="ctl-note">Evenly: the same share of every schedule. By tier: set full-rate and CARE adopters separately.</p>
+      <div class="segs" id="mode">
+        <button type="button" data-v="even" aria-pressed="true">All households evenly</button>
+        <button type="button" data-v="tier" aria-pressed="false">Targeted by tier</button>
+      </div>
+    </div>
 
     <div class="ctl">
       <div class="ctl-head"><label for="kwh">Daily output per install</label><span class="ctl-val" id="kwh-v">1.5 kWh</span></div>
       <p class="ctl-note">Year-round daily average. A typical 800 W balcony kit in Northern California lands near 2 kWh; shaded or north-facing railings do far less.</p>
-      <input type="range" id="kwh" min="0.25" max="6" step="0.25" value="1.5">
+      <input type="range" id="kwh" min="0.25" max="6" step="0.001" value="1.5">
     </div>
 
-    <div class="ctl">
+    <div class="ctl" id="ctl-adopt">
       <div class="ctl-head"><label for="adopt">Household adoption</label><span class="ctl-val" id="adopt-v">5.0%</span></div>
       <p class="ctl-note">Share of households on each schedule that install a unit.</p>
       <input type="range" id="adopt" min="0" max="50" step="0.5" value="5">
+    </div>
+
+    <div class="ctl" id="ctl-full" hidden>
+      <div class="ctl-head"><label for="full">Full-rate adopters</label><span class="ctl-val" id="full-v">3.0%</span></div>
+      <p class="ctl-note">Share of all 4.95M residential homes: non-CARE households that install a unit.</p>
+      <input type="range" id="full" min="0" max="20" step="0.5" value="3">
+    </div>
+
+    <div class="ctl" id="ctl-care" hidden>
+      <div class="ctl-head"><label for="care">CARE adopters</label><span class="ctl-val" id="care-v">0.0%</span></div>
+      <p class="ctl-note">Share of all 4.95M residential homes. The top of the range, 28.3%, is every one of the 1.4M CARE homes.</p>
+      <input type="range" id="care" min="0" max="28.3" step="0.1" value="0">
     </div>
 
     <div class="ctl">
@@ -209,7 +246,7 @@ footer{margin-top:26px;padding-top:16px;border-top:1px solid var(--line);font-si
       <div class="stat">
         <p class="k">Units installed</p>
         <div class="v" id="installs">222,857</div>
-        <div class="s">across 4.46M households</div>
+        <div class="s" id="installs-sub">across 4.46M households</div>
       </div>
       <div class="stat">
         <p class="k">Annual generation</p>
@@ -259,7 +296,7 @@ footer{margin-top:26px;padding-top:16px;border-top:1px solid var(--line);font-si
       </ul>
     </div>
 
-    <footer>Household counts are PG&amp;E's 2023 recorded figures from Appendix A of its GRC Phase II testimony. Revenue and sales are 2024 test year figures from Table B-1, Appendix B of the errata testimony filed October 29, 2025, combining bundled and DA/CCA service. Blended rates are calculated as total revenue divided by total sales.</footer>
+    <footer>Household counts are PG&amp;E's 2023 recorded figures from Appendix A of its GRC Phase II testimony. Revenue and sales are 2024 test year figures from Table B-1, Appendix B of the errata testimony filed October 29, 2025, combining bundled and DA/CCA service. Blended rates are calculated as total revenue divided by total sales. In targeted mode, adopters are counted against the 4.95M residential homes and 1.4M CARE homes used in the slides (CPUC LIOB, December 2025) and spread across schedules in proportion to their households; the GRC schedules hold about 1.15M CARE households, so all-CARE scenarios can show more units than EL-1 and EL-TOU-C households. Rooftop cost shift of $3.8B is from PG&amp;E's 2025 SB 695 report response.</footer>
 
   </main>
 </div>
@@ -279,8 +316,15 @@ footer{margin-top:26px;padding-top:16px;border-top:1px solid var(--line);font-si
   var TOTAL_KWH  = SCHEDULES.reduce(function(a,s){return a+s.kwh;},0);
   var TOTAL_REV  = SCHEDULES.reduce(function(a,s){return a+s.rev;},0);
 
-  var DEFAULTS = {kwh:1.5, adopt:5, cost:800};
-  var ids = ["kwh","adopt","cost"];
+  var RES_HH = 4950000, CARE_HH = 1400000, SHIFT = 3.8e9;
+  var RATE26 = {full:0.39, care:0.256};
+  SCHEDULES.forEach(function(s){ s.care = s.id.indexOf("EL") === 0; });
+  var MODEL_CARE_HH = SCHEDULES.reduce(function(a,s){return a+(s.care?s.hh:0);},0);
+  var MODEL_FULL_HH = TOTAL_HH - MODEL_CARE_HH;
+
+  var DEFAULTS = {kwh:1.5, adopt:5, cost:800, full:3, care:0};
+  var st = {rates:"2024", mode:"even"};
+  var ids = ["kwh","adopt","cost","full","care"];
   var el = {};
   ids.forEach(function(k){ el[k] = document.getElementById(k); el[k+"-v"] = document.getElementById(k+"-v"); });
 
@@ -298,23 +342,46 @@ footer{margin-top:26px;padding-top:16px;border-top:1px solid var(--line);font-si
     return g.toFixed(1) + " GWh";
   }
 
+  function rateOf(s){ return st.rates === "2026" ? (s.care ? RATE26.care : RATE26.full) : s.rate; }
+
+  function setSeg(id, v){
+    document.querySelectorAll("#"+id+" button").forEach(function(b){ b.setAttribute("aria-pressed", b.dataset.v === v ? "true" : "false"); });
+  }
+
   function render(){
     var kwhDay = parseFloat(el.kwh.value),
         adopt  = parseFloat(el.adopt.value)/100,
-        cost   = parseFloat(el.cost.value);
+        cost   = parseFloat(el.cost.value),
+        fullP  = parseFloat(el.full.value)/100,
+        careP  = parseFloat(el.care.value)/100,
+        tier   = st.mode === "tier";
+    var fullHomes = fullP * RES_HH,
+        careHomes = Math.min(careP * RES_HH, CARE_HH);
 
     el["kwh-v"].textContent   = kwhDay.toFixed(2).replace(/\.?0+$/,"") + " kWh";
     el["adopt-v"].textContent = (adopt*100).toFixed(1) + "%";
     el["cost-v"].textContent  = "$" + num(cost);
+    el["full-v"].textContent  = (fullP*100).toFixed(1) + "%";
+    el["care-v"].textContent  = careHomes >= CARE_HH ? "all CARE" : (careP*100).toFixed(1) + "%";
+    document.getElementById("ctl-adopt").hidden = tier;
+    document.getElementById("ctl-full").hidden = !tier;
+    document.getElementById("ctl-care").hidden = !tier;
+    setSeg("rates", st.rates); setSeg("mode", st.mode);
+    document.getElementById("modeLine").innerHTML =
+      (tier ? "<b>Targeted by tier</b>: " + num(fullHomes) + " full-rate + " + num(careHomes) + " CARE homes" : "<b>Evenly</b> across all schedules") +
+      " &middot; " + (st.rates === "2026" ? "<b>2026 rates</b>" : "<b>2024 blended rates</b>");
 
     var perUnitYear = kwhDay * 365;
     var tInstalls=0, tGen=0, tLoss=0, tSaveWeighted=0, rows=[], maxLoss=0;
 
     SCHEDULES.forEach(function(s){
-      var units    = s.hh * adopt;
+      var units    = tier
+        ? (s.care ? careHomes * s.hh / MODEL_CARE_HH : fullHomes * s.hh / MODEL_FULL_HH)
+        : s.hh * adopt;
+      var rate     = rateOf(s);
       var gen      = units * perUnitYear;
-      var saveHome = perUnitYear * s.rate;
-      var loss     = gen * s.rate;
+      var saveHome = perUnitYear * rate;
+      var loss     = gen * rate;
       var payback  = saveHome > 0 ? cost/saveHome : Infinity;
 
       tInstalls += units; tGen += gen; tLoss += loss; tSaveWeighted += saveHome*units;
@@ -335,7 +402,8 @@ footer{margin-top:26px;padding-top:16px;border-top:1px solid var(--line);font-si
     document.getElementById("gen").textContent = gwh(tGen);
     document.getElementById("gen-sub").textContent = num(perUnitYear) + " kWh per unit";
     document.getElementById("revloss").textContent = money(tLoss);
-    document.getElementById("revloss-sub").textContent = (tLoss/TOTAL_REV*100).toFixed(2) + "% of $7.74B residential";
+    document.getElementById("revloss-sub").textContent = (tLoss/SHIFT*100).toFixed(1) + "% of the $3.8B rooftop cost shift";
+    document.getElementById("installs-sub").textContent = tier ? "of 4.95M residential homes" : "across 4.46M households";
     document.getElementById("payback").textContent = isFinite(avgPay) ? avgPay.toFixed(1) + " yrs" : "never";
     document.getElementById("payback-sub").textContent = isFinite(avgPay)
       ? "at $" + num(avgSave) + " saved per year" : "no savings at these settings";
@@ -345,7 +413,7 @@ footer{margin-top:26px;padding-top:16px;border-top:1px solid var(--line);font-si
     rows.forEach(function(r){
       var tr = document.createElement("tr");
       tr.innerHTML =
-        '<td>' + r.s.name + '<span class="sched-sub">' + r.s.desc + ' &middot; $' + r.s.rate.toFixed(3) + '/kWh</span></td>' +
+        '<td>' + r.s.name + '<span class="sched-sub">' + r.s.desc + ' &middot; $' + rateOf(r.s).toFixed(3) + '/kWh</span></td>' +
         '<td>' + num(r.s.hh) + '</td>' +
         '<td>' + num(r.units) + '</td>' +
         '<td>' + gwh(r.gen) + '</td>' +
@@ -374,10 +442,27 @@ footer{margin-top:26px;padding-top:16px;border-top:1px solid var(--line);font-si
   }
 
   ids.forEach(function(k){ el[k].addEventListener("input", render); });
+  ["rates","mode"].forEach(function(id){
+    document.getElementById(id).addEventListener("click", function(e){
+      var b = e.target.closest("button"); if(!b) return;
+      st[id] = b.dataset.v; render();
+    });
+  });
   document.getElementById("reset").addEventListener("click", function(){
     ids.forEach(function(k){ el[k].value = DEFAULTS[k]; });
+    st.rates = "2024"; st.mode = "even";
     render();
   });
+
+  // Lets the slide deck load a scenario: {rates, mode, kwh, adopt, full, care}
+  window.setModel = function(o){
+    if(o.rates) st.rates = o.rates;
+    if(o.mode)  st.mode  = o.mode;
+    ["kwh","adopt","full","care","cost"].forEach(function(k){
+      if(o[k] != null) el[k].value = String(Math.min(parseFloat(el[k].max), Math.max(parseFloat(el[k].min), o[k])));
+    });
+    render();
+  };
 
   render();
 })();
