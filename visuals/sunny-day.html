@@ -60,6 +60,7 @@ input[type=range]:focus-visible{outline:2px solid var(--sun);outline-offset:3px}
 svg text{fill:var(--muted);font-family:var(--f-mono);font-size:11px}
 .read{font-family:var(--f-mono);font-size:.8rem;color:var(--muted);min-height:1.5em;margin-top:6px}
 .read b{color:var(--fg);font-weight:500}
+.read.total{margin-top:2px;padding-top:6px;border-top:1px solid var(--line)}
 ul{margin:0;padding-left:18px;display:grid;gap:8px;color:var(--muted);font-size:.88rem;max-width:72ch}
 ul strong{color:var(--fg)}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
@@ -123,6 +124,7 @@ ul strong{color:var(--fg)}
     </div>
     <div class="chartbox"><svg id="chart" viewBox="0 0 900 380" width="100%" role="img" aria-label="Area chart of household power use across 24 hours with the share covered by balcony solar highlighted."></svg></div>
     <div class="read" id="read">Move across the chart to read any moment of the day.</div>
+    <div class="read total" id="dayTotal"></div>
   </section>
 
   <section class="panel">
@@ -225,6 +227,7 @@ ul strong{color:var(--fg)}
     $("sSpill").textContent=T.spill.toFixed(1);
     $("sSave").textContent="$"+T.save.toFixed(2);
     $("sSaveS").textContent="of $"+T.cost.toFixed(2)+" in energy charges";
+    $("dayTotal").innerHTML='<b>Day total</b> · used <b>'+T.use.toFixed(1)+' kWh</b> · panel <b>'+T.gen.toFixed(1)+' kWh</b> · from PG&amp;E <b>'+bought.toFixed(1)+' kWh</b> · spilled <b>'+T.spill.toFixed(1)+' kWh</b>';
     draw(); readout();
   }
   $("watts").addEventListener("input",function(e){st.w=+e.target.value;update()});
