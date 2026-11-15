@@ -185,6 +185,15 @@
   .compare .h { font-size: 14px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
   .compare .v { font-size: 26px; font-weight: 800; }
   .lease-stats .num { font-size: 30px; white-space: nowrap; }
+  .cbars { display: flex; flex-direction: column; gap: 20px; margin-top: 18px; }
+  .cbar { display: grid; grid-template-columns: 230px 1fr 80px; gap: 14px; align-items: center; }
+  .cbar .cl { font-size: 19px; color: var(--muted); }
+  .cbar .ct { height: 38px; background: var(--surface-2); border-radius: 6px; overflow: hidden; }
+  .cbar .ct i { display: block; height: 100%; border-radius: 6px; }
+  .cbar b { font-size: 28px; font-weight: 800; text-align: right; font-variant-numeric: tabular-nums; }
+  .reach { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 12px; }
+  .reach b { display: block; font-size: 38px; font-weight: 800; color: var(--text); letter-spacing: -.02em; line-height: 1.1; }
+  .reach span { font-size: 16px; color: var(--muted); line-height: 1.3; display: block; margin-top: 4px; }
   .appendix li { font-size: 19px; margin-bottom: 10px; }
   .appendix a { color: var(--sun); }
 
@@ -468,6 +477,51 @@
   </section>
 
   <!-- ================= SLIDE 6 ================= -->
+  <section class="slide" data-title="Reallocate SOMAH to free kits">
+    <div class="kicker">The proposal: reallocate SOMAH</div>
+    <h2>Redirect SOMAH dollars to <span class="sun">free balcony kits</span> for low-income renters and homeowners</h2>
+    <div class="body" style="gap: 40px;">
+      <div class="col" style="flex: 1.1;">
+        <div class="card" style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
+          <h3>Public cost per kWh generated, over 20 years</h3>
+          <div class="cbars">
+            <div class="cbar"><span class="cl">Balcony kit, 360 W</span><div class="ct"><i style="width: 44%; background: var(--teal);"></i></div><b class="teal">5.2¢</b></div>
+            <div class="cbar"><span class="cl">SOMAH, average paid</span><div class="ct"><i style="width: 61%; background: #8aa0bd;"></i></div><b>7.1¢</b></div>
+            <div class="cbar"><span class="cl">SOMAH, tenant max</span><div class="ct"><i style="width: 100%; background: var(--red);"></i></div><b class="red">11.7¢</b></div>
+          </div>
+          <p class="footnote" style="margin-top: 16px; font-size: 16px;">Kit: $414 for 360 W at 1,100 kWh/kW/yr. SOMAH: $2.12/W average ($169.6M for 79.9 MW) and $3.50/W tenant max, rooftop at 1,500 kWh/kW/yr. No subsidy beyond the incentive.</p>
+        </div>
+        <div class="stats">
+          <div class="stat"><div class="num">$100M</div><div class="lbl">SOMAH funding per year, statewide, through 2032</div></div>
+          <div class="stat"><div class="num red">34 MW</div><div class="lbl">SOMAH installed in 6 years, against a 300 MW goal</div></div>
+        </div>
+      </div>
+      <div class="col" style="flex: .9;">
+        <div class="card accent" style="padding: 22px 26px;">
+          <h3 style="font-size: 20px; letter-spacing: .1em; text-transform: uppercase; color: var(--sun);">One year of SOMAH funding buys</h3>
+          <div class="reach">
+            <div><b>~241,000</b><span>free 360 W kits</span></div>
+            <div><b>~87 MW</b><span>2.5&times; what SOMAH built in 6 years</span></div>
+            <div><b>~$101/yr</b><span>saved per CARE household</span></div>
+          </div>
+        </div>
+        <div class="card" style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
+          <h3>Who it reaches</h3>
+          <p><strong>SOMAH:</strong> only tenants in deed-restricted multifamily housing, through a licensed contractor and interconnection.</p>
+          <p style="margin-top: 8px;"><strong>Free kits:</strong> any CARE or FERA household with a balcony, patio or yard, renter or owner. No roof, no landlord project, no install crew.</p>
+        </div>
+        <p class="closing" style="font-size: 24px; padding: 18px 24px;">Same public dollars, roughly 2.5&times; the capacity per year, delivered directly to low-income households.</p>
+      </div>
+    </div>
+    <aside class="notes">
+      <p>~2.5 min. The ask: redirect SOMAH funding from multifamily rooftop projects to free plug-in kits for low-income renters and homeowners (CARE and FERA).</p>
+      <p>Cost per kWh of public money over 20 years: the 360 W kit is about 5.2 cents (414 dollars over 7,920 kWh). SOMAH averages about 7.1 cents (2.12 dollars per watt paid in 2024 applications) and up to 11.7 cents at the 3.50 dollar tenant maximum. Rooftop assumed at 1,500 kWh per kW per year, which favors SOMAH.</p>
+      <p>Scale: SOMAH has up to 100 million dollars a year through 2032 but installed only about 34 MW by January 2025, well short of its 300 MW goal. A CPUC proposed decision would return unused 2025 and 2026 collections to customers through the Climate Credit. One year of funding buys about 241,000 kits, about 87 MW, roughly 2.5 times what SOMAH built in six years.</p>
+      <p>Reach: SOMAH only serves deed-restricted multifamily. Kits reach any income-qualified renter or owner with a balcony or yard. Caveats: kit warranty and 20-year life are unconfirmed (at 10 years the kit is 10.5 cents per kWh), and it needs a program change, since SOMAH doesn't cover plug-in kits today. Bulk procurement should push the kit price below retail.</p>
+    </aside>
+  </section>
+
+  <!-- ================= SLIDE 7 ================= -->
   <section class="slide" data-title="The lease model">
     <div class="kicker">The lease model</div>
     <h2>A utility lease could work, but the subsidy that makes it work could remove the reason to pay PG&amp;E</h2>
@@ -523,6 +577,7 @@
           <li><strong>CARE population, ~1.4M:</strong> CPUC Low Income Oversight Board, December 2025 status report.</li>
           <li><strong>PG&amp;E residential customers, ~4.95M:</strong> earlier rate-schedule table.</li>
           <li><strong>Rooftop capacity, ~9,800 MW:</strong> CEC staff presentation, August 14, 2026.</li>
+          <li><strong>SOMAH funding and results:</strong> up to $100M/yr through 2032 and $3.50/W tenant max (CPUC, D.23-03-007); 34 MW installed through Jan 2025; $169.6M for 79.9 MW of applications (July 2024 semiannual report).</li>
           <li><strong>SOMAH eligibility:</strong> <a href="https://calsomah.org/program-funding">SOMAH program funding</a>.</li>
           <li><strong>Lease DCF results</strong> ($26M, $18M, 12% return, fee levels): earlier Balcony_Solar_Lease_DCF model.</li>
         </ul>
