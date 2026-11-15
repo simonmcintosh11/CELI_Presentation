@@ -199,12 +199,16 @@
   .steps .sn { position: absolute; left: 22px; top: 20px; width: 36px; height: 36px; border-radius: 50%; background: var(--sun); color: var(--bg); font-weight: 800; font-size: 19px; display: flex; align-items: center; justify-content: center; }
   .steps .arrow { align-self: center; font-size: 34px; color: var(--sun); }
   .ledger { flex: 1; display: flex; flex-direction: column; justify-content: center; }
-  .lrow { display: flex; justify-content: space-between; align-items: baseline; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 23px; color: var(--muted); }
-  .lrow b { font-size: 32px; font-weight: 800; font-variant-numeric: tabular-nums; }
+  .lrow { display: flex; justify-content: space-between; align-items: baseline; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 20px; white-space: nowrap; gap: 10px; color: var(--muted); }
+  .lrow b { font-size: 28px; font-weight: 800; font-variant-numeric: tabular-nums; }
   .lrow.total { border-bottom: none; border-top: 2px solid var(--text); margin-top: 4px; color: var(--text); font-weight: 650; }
-  .lrow.total b { font-size: 44px; }
+  .lrow.total b { font-size: 38px; }
   .ledger h3 { font-size: 28px; }
   .card p.lnote { font-size: 17px; color: #7d90aa; margin-top: 8px; }
+  .why { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 22px 28px; }
+  .why .why-h { font-size: 20px; letter-spacing: .1em; text-transform: uppercase; color: var(--sun); margin-bottom: 14px; }
+  .why .numbered li { font-size: 20px; line-height: 1.42; margin-bottom: 16px; }
+  .card p.why-also { font-size: 18px; margin-top: 4px; padding-top: 12px; border-top: 1px solid var(--line); }
   .appendix li { font-size: 19px; margin-bottom: 10px; }
   .appendix a { color: var(--sun); }
 
@@ -535,41 +539,52 @@
   <!-- ================= SLIDE 7 ================= -->
   <section class="slide" data-title="The lease model">
     <div class="kicker">The lease model</div>
-    <h2>PG&amp;E leases kits for <span class="sun">$100 a year</span>: the household nets $100 and PG&amp;E keeps half the revenue it would have lost</h2>
-    <div class="body" style="flex-direction: column; gap: 24px; margin-top: 30px;">
-      <div class="steps">
-        <div class="card step"><span class="sn">1</span><h3>PG&amp;E buys a fleet</h3><p>The utility purchases balcony solar kits in bulk and owns them.</p></div>
-        <div class="arrow">&rarr;</div>
-        <div class="card step"><span class="sn">2</span><h3>Leases them for $100/yr</h3><p>Households pay nothing upfront. The fee goes on the PG&amp;E bill.</p></div>
-        <div class="arrow">&rarr;</div>
-        <div class="card step"><span class="sn">3</span><h3>Kit cuts the bill $200/yr</h3><p>Power from the kit replaces $200 of electricity the household would have bought.</p></div>
+    <h2>PG&amp;E leases a $400 kit for <span class="sun">$100 a year</span>: households net $100, and PG&amp;E has four reasons to want it</h2>
+    <div class="body" style="gap: 36px;">
+      <div class="col" style="flex: 0 0 600px; gap: 16px;">
+        <div class="card" style="padding: 18px 22px;">
+          <h3>How it works</h3>
+          <ol class="numbered" style="margin-top: 6px;">
+            <li style="margin-bottom: 8px;"><strong>PG&amp;E buys a fleet</strong> of $400 kits and owns them.</li>
+            <li style="margin-bottom: 8px;"><strong>Leases each one for $100/yr</strong>, nothing upfront, fee on the bill.</li>
+            <li style="margin-bottom: 0;"><strong>The kit saves ~$200/yr</strong>, split 50/50 with PG&amp;E.</li>
+          </ol>
+        </div>
+        <div style="display: flex; gap: 16px; flex: 1; min-height: 0;">
+          <div class="card ledger accent">
+            <h3>Household</h3>
+            <div class="lrow"><span>Savings</span><b class="teal">+$200</b></div>
+            <div class="lrow"><span>Lease fee</span><b class="red">&minus;$100</b></div>
+            <div class="lrow total"><span>Net / yr</span><b class="teal">+$100</b></div>
+            <p class="lnote">~$2,000 over 20 years, with no upfront cost.</p>
+          </div>
+          <div class="card ledger accent">
+            <h3>PG&amp;E</h3>
+            <div class="lrow"><span>Lost sales</span><b class="red">&minus;$200</b></div>
+            <div class="lrow"><span>Lease revenue</span><b class="teal">+$100</b></div>
+            <div class="lrow total"><span>Preserved</span><b class="sun">50%</b></div>
+            <p class="lnote">Kit paid back in ~4 years; ~$1,600 net over 20 years.</p>
+          </div>
+        </div>
       </div>
-      <div style="display: flex; gap: 24px; flex: 1; min-height: 0;">
-        <div class="card ledger accent">
-          <h3>The household</h3>
-          <div class="lrow"><span>Bill savings</span><b class="teal">+$200</b></div>
-          <div class="lrow"><span>Lease fee</span><b class="red">&minus;$100</b></div>
-          <div class="lrow total"><span>Net per year</span><b class="teal">+$100</b></div>
-          <p class="lnote">With no upfront cost, so households without capital can take part.</p>
-        </div>
-        <div class="card ledger accent">
-          <h3>PG&amp;E</h3>
-          <div class="lrow"><span>Lost electricity sales</span><b class="red">&minus;$200</b></div>
-          <div class="lrow"><span>Lease revenue</span><b class="teal">+$100</b></div>
-          <div class="lrow total"><span>Revenue preserved</span><b class="sun">50%</b></div>
-          <p class="lnote">Half the lost revenue comes back, so less is shifted onto other customers.</p>
-        </div>
-        <div class="card warn" style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
-          <h3>The tension</h3>
-          <p>If kits are given away free, as with the SOMAH reallocation, there's little reason to lease one from PG&amp;E. The lease works only between unsubsidized cost and free delivery.</p>
+      <div class="col grow">
+        <div class="card why">
+          <h3 class="why-h">Why PG&amp;E would want this</h3>
+          <ol class="numbered">
+            <li><strong>Less lost revenue.</strong> Without the lease, that $100/yr doesn't exist: customers either can't afford a kit or buy one outright and pay PG&amp;E nothing.</li>
+            <li><strong>Standing with regulators on equity.</strong> A measurable result (CARE/FERA households enrolled, bill savings delivered to that tier) for the CPUC Affordability proceeding (R.18-07-006) and the Environmental and Social Justice Action Plan.</li>
+            <li><strong>Data visibility.</strong> Plug-in kits sit behind the meter where PG&amp;E can't see them. The lease shows where panels are and what they produce, for load forecasting, grid-upgrade planning and CPUC evidence.</li>
+            <li><strong>A foothold in distributed generation.</strong> Experience billing, tracking and maintaining assets at customers' homes before batteries. Precedent: Evergy (MO) battery lease at ~$10/mo since 2023; PSE&amp;G (NJ) battery pilot. Balcony solar is the safer start: no chemistry, fire risk or dispatch.</li>
+          </ol>
+          <p class="why-also"><strong>Also:</strong> a lease makes PG&amp;E a partner, not just a biller, as CCAs compete for customers.</p>
         </div>
       </div>
     </div>
     <aside class="notes">
-      <p>~2.5 min. How the program works: PG&amp;E buys a fleet of balcony kits and leases them to households for $100 a year. Nothing upfront, the fee goes on the bill.</p>
-      <p>Household: the kit saves about $200 a year on electricity, minus the $100 fee, so the family nets about $100 a year without fronting any capital.</p>
-      <p>PG&amp;E: it loses about $200 a year in sales per kit but collects $100 in lease revenue, so it preserves half of the lost revenue. That means less of the cost shift lands on non-participating customers.</p>
-      <p>Tension: if a subsidy like the SOMAH reallocation delivers kits free, households have little reason to lease. The lease fits the space between unsubsidized cost and free delivery.</p>
+      <p>~2.5 min. How it works: PG&amp;E buys a fleet of $400 kits and leases them for $100 a year with nothing upfront. The kit saves about $200 a year, split 50/50. The household nets $100 a year (about $2,000 over 20 years). PG&amp;E collects $100 a year, pays the kit back in about 4 years and nets about $1,600 over 20 years, preserving half the revenue it would otherwise lose.</p>
+      <p>Why PG&amp;E would want it. 1) Less lost revenue: without the lease that $100 doesn't exist, because customers either can't afford to adopt or buy outright and pay PG&amp;E nothing. 2) Equity standing: the CPUC ties utility investment and program design to equity outcomes. A lease low-income customers can afford is measurable (CARE/FERA households enrolled, bill savings to that tier), and connects to the Affordability proceeding R.18-07-006 and the ESJ Action Plan.</p>
+      <p>3) Data visibility: once legal, balcony solar sits behind the meter where PG&amp;E can't see it. The lease shows where panels are and what they produce, which helps load forecasting, grid-upgrade planning and evidence on where distributed generation is clustering. 4) Foothold in distributed generation: billing, asset tracking, maintenance and lease agreements, preparing for batteries. Evergy in Missouri has run a utility-owned home battery lease pilot since 2023 at about $10 a month; PSE&amp;G in New Jersey runs a battery pilot as learning for virtual power plants. Balcony solar is a safer, simpler first asset: no chemistry, fire risk or complex dispatch.</p>
+      <p>Brief mention: customer retention and brand, as CCAs compete for customers. Weakest point, keep it short.</p>
     </aside>
   </section>
 
@@ -594,7 +609,7 @@
           <li><strong>Rooftop capacity, ~9,800 MW:</strong> CEC staff presentation, August 14, 2026.</li>
           <li><strong>SOMAH funding and results:</strong> up to $100M/yr through 2032 and $3.50/W tenant max (CPUC, D.23-03-007); 34 MW installed through Jan 2025; $169.6M for 79.9 MW of applications (July 2024 semiannual report).</li>
           <li><strong>SOMAH eligibility:</strong> <a href="https://calsomah.org/program-funding">SOMAH program funding</a>.</li>
-          <li><strong>Lease DCF results</strong> ($26M, $18M, 12% return, fee levels): earlier Balcony_Solar_Lease_DCF model.</li>
+          <li><strong>Lease model:</strong> $400 kit, $100/yr fee, ~$200/yr savings split 50/50 (earlier lease research). Regulatory anchors: CPUC Affordability proceeding R.18-07-006; CPUC Environmental and Social Justice Action Plan. Precedents: Evergy home battery lease pilot (2023, ~$10/mo); PSE&amp;G battery pilot.</li>
         </ul>
         <p class="footnote">Figures from earlier research sessions and a rate search on October 21, 2026. Items marked approximate are estimates.</p>
       </div>
