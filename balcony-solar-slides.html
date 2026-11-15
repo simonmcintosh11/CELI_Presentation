@@ -209,6 +209,18 @@
   .why .why-h { font-size: 20px; letter-spacing: .1em; text-transform: uppercase; color: var(--sun); margin-bottom: 14px; }
   .why .numbered li { font-size: 20px; line-height: 1.42; margin-bottom: 16px; }
   .card p.why-also { font-size: 18px; margin-top: 4px; padding-top: 12px; border-top: 1px solid var(--line); }
+  .scen { display: block; width: 100%; text-align: left; font: inherit; font-size: 18px; font-weight: 600; line-height: 1.25; color: var(--text); background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 7px 12px; cursor: pointer; transition: border-color .15s, background .15s; }
+  .scen .scen-t { display: block; }
+  .scen .scen-sub { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; margin-top: 2px; }
+  .scen .footnote { font-weight: 400; font-size: 15px; }
+  .scen .scen-set { font-size: 14px; font-weight: 700; color: var(--sun); letter-spacing: .03em; white-space: nowrap; }
+  .scen:hover, .scen:focus-visible { border-color: var(--sun); outline: none; }
+  .scen.on { border-color: var(--sun); background: var(--sun-soft); }
+  .scale-table td { padding-top: 8px; padding-bottom: 8px; }
+  .scale-table td:first-child, .scale-table th:first-child { width: 44%; padding-left: 0; padding-right: 10px; }
+  .scale-table th { font-size: 13px; letter-spacing: .03em; padding-left: 8px; padding-right: 8px; }
+  .scale-table td { padding-left: 8px; padding-right: 8px; }
+  .th-hint { text-transform: none; letter-spacing: 0; font-weight: 400; color: #7d90aa; }
   .appendix li { font-size: 19px; margin-bottom: 10px; }
   .appendix a { color: var(--sun); }
 
@@ -411,10 +423,10 @@
     <h2>Even the most aggressive scenario offsets <span class="sun">under a tenth</span> of PG&amp;E's $3.8B rooftop cost shift</h2>
     <div class="body" style="gap: 36px;">
       <div class="col" style="flex: 1;">
-        <table style="font-size: 19px;">
+        <table class="scale-table" style="font-size: 19px;">
           <thead>
             <tr>
-              <th>Scenario</th>
+              <th>Scenario<br><span class="th-hint">click to load into model</span></th>
               <th>360 W offset<br>($M/yr)</th>
               <th>360 W<br>% of shift</th>
               <th>800 W offset<br>($M/yr)</th>
@@ -422,10 +434,10 @@
             </tr>
           </thead>
           <tbody>
-            <tr><td>3% of residential, full rate<br><span class="footnote">148,500 homes</span></td><td>~23</td><td>0.6%</td><td>~51</td><td>1.3%</td></tr>
-            <tr><td>3% full rate + 5% CARE<br><span class="footnote">combined 8%</span></td><td>~48</td><td>1.3%</td><td>~107</td><td>2.8%</td></tr>
-            <tr><td>10% of residential, full rate<br><span class="footnote">495,000 homes</span></td><td>~76</td><td>2.0%</td><td>~170</td><td>4.5%</td></tr>
-            <tr><td>Free kit for all CARE households<br><span class="footnote">1.4M homes</span></td><td>~142</td><td>3.7%</td><td>~315</td><td class="big">8.3%</td></tr>
+            <tr><td><button type="button" class="scen" data-adopt="3"><span class="scen-t">3% of residential, full rate</span><span class="scen-sub"><span class="footnote">148,500 homes</span><span class="scen-set">Set 3% &rarr;</span></span></button></td><td>~23</td><td>0.6%</td><td>~51</td><td>1.3%</td></tr>
+            <tr><td><button type="button" class="scen" data-adopt="8"><span class="scen-t">3% full rate + 5% CARE</span><span class="scen-sub"><span class="footnote">combined 8%</span><span class="scen-set">Set 8% &rarr;</span></span></button></td><td>~48</td><td>1.3%</td><td>~107</td><td>2.8%</td></tr>
+            <tr><td><button type="button" class="scen" data-adopt="10"><span class="scen-t">10% of residential, full rate</span><span class="scen-sub"><span class="footnote">495,000 homes</span><span class="scen-set">Set 10% &rarr;</span></span></button></td><td>~76</td><td>2.0%</td><td>~170</td><td>4.5%</td></tr>
+            <tr><td><button type="button" class="scen" data-adopt="31.5"><span class="scen-t">Free kit for all CARE households</span><span class="scen-sub"><span class="footnote">1.4M homes</span><span class="scen-set">Set 31.5% &rarr;</span></span></button></td><td>~142</td><td>3.7%</td><td>~315</td><td class="big">8.3%</td></tr>
           </tbody>
         </table>
         <p class="footnote" style="margin-top: auto;">Upper bounds on PG&amp;E's lost revenue: assumes 1,100 kWh per kW per year and that every kWh displaces a retail purchase. Rates: 39¢/kWh full rate, 25.6¢ CARE.</p>
@@ -442,6 +454,7 @@
     <aside class="notes">
       <p>~2.5 min. Even the most aggressive balcony scenario (free 800 W kit for all 1.4M CARE households) offsets 8.3% of the $3.8B annual rooftop cost shift. Financial risk is modest, but the cost-sharing lesson isn't.</p>
       <p>Assumptions: 1,100 kWh per kW per year; every kWh displaces a retail purchase, so these are upper bounds. 39¢ full rate, 25.6¢ CARE.</p>
+      <p>Click a scenario to load its adoption rate into the model (nearest 0.5%). "Free kit for all CARE" sets 31.5%, which is 1.4M of the model's 4.46M households; the model spreads adoption evenly across all four schedules rather than only CARE, so its dollars run higher than the table.</p>
       <p>Live demo: push household adoption up and watch "revenue not collected" stay a small slice of $7.74B residential revenue. Note the model uses blended schedule rates and its own output default (1.5 kWh/day), so its dollars won't match the table exactly.</p>
     </aside>
   </section>
@@ -730,6 +743,21 @@
     b.addEventListener('click', e => { e.stopPropagation(); openOverlay(name); });
     slot.appendChild(b);
   });
+  // slide 4: scenario buttons set the scale model's household adoption (nearest 0.5%)
+  document.querySelectorAll('.scen[data-adopt]').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const frame = document.querySelector('#slot-scale iframe');
+      const doc = frame && frame.contentDocument;
+      const input = doc && doc.getElementById('adopt');
+      if (!input) return;
+      const v = Math.round(parseFloat(btn.dataset.adopt) * 2) / 2;
+      input.value = String(Math.min(parseFloat(input.max), Math.max(parseFloat(input.min), v)));
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+      document.querySelectorAll('.scen').forEach(b => b.classList.toggle('on', b === btn));
+    });
+    btn.addEventListener('keydown', e => { if (e.key === ' ' || e.key === 'Enter') { e.stopPropagation(); } });
+  });
   // slots with pasted content (no label) drop the placeholder styling
   document.querySelectorAll('.slot:not([data-vis])').forEach(slot => {
     if (!slot.querySelector('.slot-label')) slot.classList.add('filled');
@@ -754,6 +782,7 @@
   function onKey(e) {
     if (e.metaKey || e.ctrlKey || e.altKey) return;
     if (overlay.classList.contains('open')) { if (e.key === 'Escape') closeOverlay(); return; }
+    if (e.target.closest && e.target.closest('button') && (e.key === ' ' || e.key === 'Enter')) return;
     switch (e.key) {
       case 'ArrowRight': case 'ArrowDown': case 'PageDown': case ' ': e.preventDefault(); show(current + 1); break;
       case 'ArrowLeft': case 'ArrowUp': case 'PageUp': e.preventDefault(); show(current - 1); break;
