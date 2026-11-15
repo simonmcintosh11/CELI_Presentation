@@ -327,14 +327,10 @@
           </tbody>
         </table>
       <div style="display: flex; gap: 28px; flex: 1; min-height: 0;">
-        <div class="col" style="flex: .4;">
-          <div class="card warn">
+        <div class="col" style="flex: 0 0 340px;">
+          <div class="card warn" style="flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 6px;">
             <h3>No credit for exports under SB 868</h3>
             <p>Whatever the home isn't using flows to the grid unpaid. The 360 W kit rarely overshoots midday load; the 800 W kit is more likely to spill surplus.</p>
-          </div>
-          <div class="card accent">
-            <h3>These are best cases</h3>
-            <p>Both assume the household uses everything the kit produces. Rates don't change for the household; only usage does.</p>
           </div>
         </div>
         <div class="col" style="flex: 1;">
@@ -572,9 +568,9 @@
   const COMMON = ':root{color-scheme:dark}html,body{background:transparent!important;overflow:hidden}' +
     '.wrap{max-width:none!important;margin:0!important;padding:0!important}';
   const FOCUS = {
-    'sunny-day': { width: 1180, css:
+    'sunny-day': { width: 1320, css:
       '.wrap>header,.wrap>.stats,.wrap>section:nth-of-type(4){display:none!important}' +
-      '.wrap{grid-template-columns:340px minmax(0,1fr);align-items:start}' +
+      '.wrap{grid-template-columns:360px minmax(0,1fr);align-items:start}' +
       '.top{grid-column:1;grid-row:1;grid-template-columns:1fr!important;gap:16px}' +
       '.wrap>section:nth-of-type(3){grid-column:2;grid-row:1}' +
       '.big{font-size:2.6rem}' },
