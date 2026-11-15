@@ -25,7 +25,7 @@
   Filled:  slot-sunny-day (sunny-day), slot-cost-spread (grid-cost-spread),
            slot-scale (balcony-solar-model)
   Inline:  slot-hero (kit diagram SVG, written directly in slide 1)
-  Open:    slot-lease
+  Open:    none
 -->
 <style>
   :root {
@@ -194,6 +194,17 @@
   .reach { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 12px; }
   .reach b { display: block; font-size: 38px; font-weight: 800; color: var(--text); letter-spacing: -.02em; line-height: 1.1; }
   .reach span { font-size: 16px; color: var(--muted); line-height: 1.3; display: block; margin-top: 4px; }
+  .steps { display: flex; align-items: stretch; gap: 14px; }
+  .steps .step { flex: 1; position: relative; padding: 20px 24px 20px 74px; }
+  .steps .sn { position: absolute; left: 22px; top: 20px; width: 36px; height: 36px; border-radius: 50%; background: var(--sun); color: var(--bg); font-weight: 800; font-size: 19px; display: flex; align-items: center; justify-content: center; }
+  .steps .arrow { align-self: center; font-size: 34px; color: var(--sun); }
+  .ledger { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+  .lrow { display: flex; justify-content: space-between; align-items: baseline; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 23px; color: var(--muted); }
+  .lrow b { font-size: 32px; font-weight: 800; font-variant-numeric: tabular-nums; }
+  .lrow.total { border-bottom: none; border-top: 2px solid var(--text); margin-top: 4px; color: var(--text); font-weight: 650; }
+  .lrow.total b { font-size: 44px; }
+  .ledger h3 { font-size: 28px; }
+  .card p.lnote { font-size: 17px; color: #7d90aa; margin-top: 8px; }
   .appendix li { font-size: 19px; margin-bottom: 10px; }
   .appendix a { color: var(--sun); }
 
@@ -524,37 +535,41 @@
   <!-- ================= SLIDE 7 ================= -->
   <section class="slide" data-title="The lease model">
     <div class="kicker">The lease model</div>
-    <h2>A utility lease could work, but the subsidy that makes it work could remove the reason to pay PG&amp;E</h2>
-    <div class="body">
-      <div class="col" style="flex: 1.05;">
-        <div class="card accent">
-          <h3>The model</h3>
-          <p>PG&amp;E leases plug-in kits so households with no capital can participate.</p>
-        </div>
-        <div>
-          <h3 style="margin-bottom: 14px;">What the DCF showed (SOMAH-style incentive covers the kit)</h3>
-          <div class="stats lease-stats">
-            <div class="stat" style="flex: 1.5;"><div class="num"><span class="red">−$26M</span> → <span class="teal">+$18M</span></div><div class="lbl">CARE program NPV</div></div>
-            <div class="stat"><div class="num">~$11/mo</div><div class="lbl">Break-even fee, 12% return</div></div>
-            <div class="stat"><div class="num">~$5/mo</div><div class="lbl">Left for the family</div></div>
-          </div>
-        </div>
-        <div class="card warn">
-          <h3>The tension</h3>
-          <p>If a subsidy delivers the kit free, there's little reason to pay PG&amp;E for distribution, and the lease revenue disappears.</p>
-        </div>
+    <h2>PG&amp;E leases kits for <span class="sun">$100 a year</span>: the household nets $100 and PG&amp;E keeps half the revenue it would have lost</h2>
+    <div class="body" style="flex-direction: column; gap: 24px; margin-top: 30px;">
+      <div class="steps">
+        <div class="card step"><span class="sn">1</span><h3>PG&amp;E buys a fleet</h3><p>The utility purchases balcony solar kits in bulk and owns them.</p></div>
+        <div class="arrow">&rarr;</div>
+        <div class="card step"><span class="sn">2</span><h3>Leases them for $100/yr</h3><p>Households pay nothing upfront. The fee goes on the PG&amp;E bill.</p></div>
+        <div class="arrow">&rarr;</div>
+        <div class="card step"><span class="sn">3</span><h3>Kit cuts the bill $200/yr</h3><p>Power from the kit replaces $200 of electricity the household would have bought.</p></div>
       </div>
-      <div class="col" style="flex: .95;">
-        <div class="slot" id="slot-lease">
-          <div class="slot-label"><code>#slot-lease</code><span>Lease visual: the narrow window between unsubsidized cost and fully subsidized delivery</span></div>
+      <div style="display: flex; gap: 24px; flex: 1; min-height: 0;">
+        <div class="card ledger accent">
+          <h3>The household</h3>
+          <div class="lrow"><span>Bill savings</span><b class="teal">+$200</b></div>
+          <div class="lrow"><span>Lease fee</span><b class="red">&minus;$100</b></div>
+          <div class="lrow total"><span>Net per year</span><b class="teal">+$100</b></div>
+          <p class="lnote">With no upfront cost, so households without capital can take part.</p>
         </div>
-        <p class="closing" style="font-size: 26px; padding: 20px 24px;">The lease works only in the narrow space between unsubsidized cost and fully subsidized delivery.</p>
+        <div class="card ledger accent">
+          <h3>PG&amp;E</h3>
+          <div class="lrow"><span>Lost electricity sales</span><b class="red">&minus;$200</b></div>
+          <div class="lrow"><span>Lease revenue</span><b class="teal">+$100</b></div>
+          <div class="lrow total"><span>Revenue preserved</span><b class="sun">50%</b></div>
+          <p class="lnote">Half the lost revenue comes back, so less is shifted onto other customers.</p>
+        </div>
+        <div class="card warn" style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
+          <h3>The tension</h3>
+          <p>If kits are given away free, as with the SOMAH reallocation, there's little reason to lease one from PG&amp;E. The lease works only between unsubsidized cost and free delivery.</p>
+        </div>
       </div>
     </div>
     <aside class="notes">
-      <p>~2.5 min. A utility lease is a possible way forward for PG&amp;E, but the same subsidy that makes it work for families could remove the reason to pay PG&amp;E for delivery.</p>
-      <p>DCF: with a SOMAH-style incentive covering the kit, CARE program NPV moves from about −$26M to about +$18M. Break-even fee for a 12% return is about $11/month with small yearly increases, leaving the family about $5/month.</p>
-      <p>Tension: if the subsidy delivers the kit free, there's little incentive to pay PG&amp;E for distribution. Close: the lease works only in the narrow space between unsubsidized cost and fully subsidized delivery.</p>
+      <p>~2.5 min. How the program works: PG&amp;E buys a fleet of balcony kits and leases them to households for $100 a year. Nothing upfront, the fee goes on the bill.</p>
+      <p>Household: the kit saves about $200 a year on electricity, minus the $100 fee, so the family nets about $100 a year without fronting any capital.</p>
+      <p>PG&amp;E: it loses about $200 a year in sales per kit but collects $100 in lease revenue, so it preserves half of the lost revenue. That means less of the cost shift lands on non-participating customers.</p>
+      <p>Tension: if a subsidy like the SOMAH reallocation delivers kits free, households have little reason to lease. The lease fits the space between unsubsidized cost and free delivery.</p>
     </aside>
   </section>
 
