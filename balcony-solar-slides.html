@@ -217,9 +217,18 @@
   .scen:hover, .scen:focus-visible { border-color: var(--sun); outline: none; }
   .scen.on { border-color: var(--sun); background: var(--sun-soft); }
   .scale-table td { padding-top: 8px; padding-bottom: 8px; }
-  .scale-table td:first-child, .scale-table th:first-child { width: 44%; padding-left: 0; padding-right: 10px; }
+  .scale-table { table-layout: fixed; }
+  .scale-table td:first-child, .scale-table .kit-row th:first-child { padding-left: 0; padding-right: 10px; }
+  .scale-table .sub-row th { text-align: right; padding-left: 8px; }
+  .scale-table .kit-row th:not(:first-child) { padding-left: 8px; padding-right: 0; }
   .scale-table th { font-size: 13px; letter-spacing: .03em; padding-left: 8px; padding-right: 8px; }
   .scale-table td { padding-left: 8px; padding-right: 8px; }
+  .scale-table .kit-row th { border-bottom: none; padding-bottom: 6px; vertical-align: bottom; }
+  .scale-table .kit-row th:first-child { border-bottom: 2px solid var(--line); }
+  .kitb { width: 100%; font: inherit; font-size: 16px; font-weight: 700; letter-spacing: .04em; color: var(--text); background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 7px 10px; cursor: pointer; text-transform: none; transition: border-color .15s, background .15s; }
+  .kitb span { display: block; font-size: 13px; font-weight: 700; color: var(--sun); letter-spacing: .03em; margin-top: 1px; }
+  .kitb:hover, .kitb:focus-visible { border-color: var(--sun); outline: none; }
+  .kitb.on { border-color: var(--sun); background: var(--sun-soft); }
   .th-hint { text-transform: none; letter-spacing: 0; font-weight: 400; color: #7d90aa; }
   .appendix li { font-size: 19px; margin-bottom: 10px; }
   .appendix a { color: var(--sun); }
@@ -424,13 +433,18 @@
     <div class="body" style="gap: 36px;">
       <div class="col" style="flex: 1;">
         <table class="scale-table" style="font-size: 19px;">
+          <colgroup><col style="width: 40%"><col style="width: 15%"><col style="width: 15%"><col style="width: 15%"><col style="width: 15%"></colgroup>
           <thead>
-            <tr>
-              <th>Scenario<br><span class="th-hint">click to load into model</span></th>
-              <th>360 W offset<br>($M/yr)</th>
-              <th>360 W<br>% of shift</th>
-              <th>800 W offset<br>($M/yr)</th>
-              <th>800 W<br>% of shift</th>
+            <tr class="kit-row">
+              <th rowspan="2">Scenario<br><span class="th-hint">click to load into model</span></th>
+              <th colspan="2"><button type="button" class="kitb" data-watts="360">360 W kit <span>~1 kWh/day &rarr;</span></button></th>
+              <th colspan="2"><button type="button" class="kitb" data-watts="800">800 W kit <span>~2.5 kWh/day &rarr;</span></button></th>
+            </tr>
+            <tr class="sub-row">
+              <th>Offset<br>($M/yr)</th>
+              <th>% of<br>shift</th>
+              <th>Offset<br>($M/yr)</th>
+              <th>% of<br>shift</th>
             </tr>
           </thead>
           <tbody>
@@ -454,7 +468,7 @@
     <aside class="notes">
       <p>~2.5 min. Even the most aggressive balcony scenario (free 800 W kit for all 1.4M CARE households) offsets 8.3% of the $3.8B annual rooftop cost shift. Financial risk is modest, but the cost-sharing lesson isn't.</p>
       <p>Assumptions: 1,100 kWh per kW per year; every kWh displaces a retail purchase, so these are upper bounds. 39¢ full rate, 25.6¢ CARE.</p>
-      <p>Click a scenario to load its adoption rate into the model (nearest 0.5%). "Free kit for all CARE" sets 31.5%, which is 1.4M of the model's 4.46M households; the model spreads adoption evenly across all four schedules rather than only CARE, so its dollars run higher than the table.</p>
+      <p>Click the 360 W or 800 W kit button to set the model's daily output (1,100 kWh per kW per year: about 1.1 kWh/day for 360 W, set to 1.0, and 2.4 kWh/day for 800 W, set to 2.5, the slider's nearest 0.25 step). Click a scenario to load its adoption rate into the model (nearest 0.5%). "Free kit for all CARE" sets 31.5%, which is 1.4M of the model's 4.46M households; the model spreads adoption evenly across all four schedules rather than only CARE, so its dollars run higher than the table.</p>
       <p>Live demo: push household adoption up and watch "revenue not collected" stay a small slice of $7.74B residential revenue. Note the model uses blended schedule rates and its own output default (1.5 kWh/day), so its dollars won't match the table exactly.</p>
     </aside>
   </section>
@@ -757,6 +771,23 @@
       document.querySelectorAll('.scen').forEach(b => b.classList.toggle('on', b === btn));
     });
     btn.addEventListener('keydown', e => { if (e.key === ' ' || e.key === 'Enter') { e.stopPropagation(); } });
+  });
+  // slide 4: kit buttons set the scale model's daily output per install
+  // (watts x 1,100 kWh per kW per year / 365, rounded to the slider's 0.25 kWh step)
+  document.querySelectorAll('.kitb[data-watts]').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const frame = document.querySelector('#slot-scale iframe');
+      const doc = frame && frame.contentDocument;
+      const input = doc && doc.getElementById('kwh');
+      if (!input) return;
+      const perDay = parseFloat(btn.dataset.watts) / 1000 * 1100 / 365;
+      const step = parseFloat(input.step) || 0.25;
+      const v = Math.round(perDay / step) * step;
+      input.value = String(Math.min(parseFloat(input.max), Math.max(parseFloat(input.min), v)));
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+      document.querySelectorAll('.kitb').forEach(b => b.classList.toggle('on', b === btn));
+    });
   });
   // slots with pasted content (no label) drop the placeholder styling
   document.querySelectorAll('.slot:not([data-vis])').forEach(slot => {
